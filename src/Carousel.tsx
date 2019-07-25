@@ -565,8 +565,14 @@ class Carousel extends React.Component<CarouselProps, CarouselInternalState> {
   }
   public renderCarouselItems(): any {
     // it can be any.
+    const childrenArr = React.Children.toArray(this.props.children);
+    const { clones } = getClones(
+      this.state.slidesToShow,
+      childrenArr
+    );
     return (
       <CarouselItems
+        clones={clones}
         goToSlide={this.goToSlide}
         state={this.state}
         props={this.props}

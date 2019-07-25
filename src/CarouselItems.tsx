@@ -7,14 +7,16 @@ interface CarouselItemsProps {
   props: CarouselProps;
   state: CarouselInternalState;
   goToSlide: (index: number) => void;
+  clones: any;
 }
 
 const CarouselItems = ({
   props,
   state,
-  goToSlide
+  goToSlide,
+  clones
 }: CarouselItemsProps): any => { // it can be any.
-  const { itemWidth, clones } = state;
+  const { itemWidth } = state;
   const { children, infinite, itemClass, partialVisbile } = props;
   const {
     flexBisis,
