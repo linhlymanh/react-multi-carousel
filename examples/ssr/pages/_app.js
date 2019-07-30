@@ -1,13 +1,14 @@
-import React from 'react';
-import App, { Container } from 'next/app';
-import Head from 'next/head';
-import { MuiThemeProvider } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import JssProvider from 'react-jss/lib/JssProvider';
-import Typography from '@material-ui/core/Typography';
+import React from "react";
+import App, { Container } from "next/app";
+import Head from "next/head";
+import { MuiThemeProvider } from "@material-ui/core/styles";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import JssProvider from "react-jss/lib/JssProvider";
+import Typography from "@material-ui/core/Typography";
 import ReactGA from "react-ga";
-import Menu from '../components/menu';
-import getPageContext from '../src/getPageContext';
+import Menu from "../components/menu";
+import getPageContext from "../src/getPageContext";
+import raven from "../modules/raven";
 
 if (typeof window !== "undefined") {
   ReactGA.initialize("UA-135638821-1");
@@ -19,13 +20,16 @@ class MyApp extends App {
     super();
     this.pageContext = getPageContext();
   }
-
-  componentDidMount() {
+  componentDidCatch(error, errorInfo) {
+    raven.catchError(error, errorInfo, "critical");
+  }
+  async componentDidMount() {
     // Remove the server-side injected CSS.
-    const jssStyles = document.querySelector('#jss-server-side');
+    const jssStyles = document.querySelector("#jss-server-side");
     if (jssStyles && jssStyles.parentNode) {
       jssStyles.parentNode.removeChild(jssStyles);
     }
+    await raven.init();
   }
 
   render() {
@@ -33,7 +37,7 @@ class MyApp extends App {
     return (
       <Container>
         <Head>
-          <title>React-multi-carousel  - w3js</title>
+          <title>React-multi-carousel - w3js</title>
         </Head>
         {/* Wrap every page in Jss and Theme providers */}
         <JssProvider
@@ -50,7 +54,7 @@ class MyApp extends App {
             <CssBaseline />
             {/* Pass pageContext to the _document though the renderPage enhancer
                 to render collected styles on server-side. */}
-                <Menu></Menu>
+            <Menu />
             <Component pageContext={this.pageContext} {...pageProps} />
           </MuiThemeProvider>
         </JssProvider>
