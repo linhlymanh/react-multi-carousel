@@ -30,11 +30,11 @@ declare class Carousel extends React.Component<CarouselProps, CarouselInternalSt
     isInThrottle?: boolean;
     initialY: number;
     constructor(props: CarouselProps);
-    setIsInThrottle(isInThrottle?: boolean): void;
-    componentDidMount(): void;
-    getDerivedStateFromProps(props: CarouselProps, state: CarouselInternalState): {
+    static getDerivedStateFromProps(props: CarouselProps, state: CarouselInternalState): {
         totalItems: number;
     } | undefined;
+    setIsInThrottle(isInThrottle?: boolean): void;
+    componentDidMount(): void;
     setClones(slidesToShow: number, itemWidth?: number, forResizing?: boolean): void;
     setItemsToShow(shouldCorrectItemPosition?: boolean): void;
     setContainerAndItemWidth(slidesToShow: number, shouldCorrectItemPosition?: boolean): void;

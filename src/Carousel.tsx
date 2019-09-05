@@ -102,6 +102,15 @@ class Carousel extends React.Component<CarouselProps, CarouselInternalState> {
     this.initialY = 0;
     this.isInThrottle = false;
   }
+
+  static getDerivedStateFromProps(props: CarouselProps, state: CarouselInternalState) {
+    if (React.Children.count(props.children) !== state.totalItems) {
+      return {
+        totalItems: React.Children.count(props.children),
+      };
+    }
+  }
+
   public setIsInThrottle(isInThrottle: boolean = false): void {
     this.isInThrottle = isInThrottle;
   }
@@ -115,14 +124,6 @@ class Carousel extends React.Component<CarouselProps, CarouselInternalState> {
     }
     if (this.props.autoPlay && this.props.autoPlaySpeed) {
       this.autoPlay = setInterval(this.next, this.props.autoPlaySpeed);
-    }
-  }
-
-  public getDerivedStateFromProps(props: CarouselProps, state: CarouselInternalState) {
-    if (React.Children.count(props.children) !== state.totalItems) {
-      return {
-        totalItems: React.Children.count(props.children),
-      };
     }
   }
 
