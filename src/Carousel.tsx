@@ -118,6 +118,14 @@ class Carousel extends React.Component<CarouselProps, CarouselInternalState> {
     }
   }
 
+  public getDerivedStateFromProps(props: CarouselProps, state: CarouselInternalState) {
+    if (React.Children.count(props.children) !== state.totalItems) {
+      return {
+        totalItems: React.Children.count(props.children),
+      };
+    }
+  }
+
   /*
   We only want to set the clones on the client-side cause it relies on getting the width of the carousel items.
   */
