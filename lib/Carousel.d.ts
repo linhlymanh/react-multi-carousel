@@ -32,7 +32,7 @@ declare class Carousel extends React.Component<CarouselProps, CarouselInternalSt
     constructor(props: CarouselProps);
     static getDerivedStateFromProps(props: CarouselProps, state: CarouselInternalState): {
         totalItems: number;
-    } | undefined;
+    } | null;
     setIsInThrottle(isInThrottle?: boolean): void;
     componentDidMount(): void;
     setClones(slidesToShow: number, itemWidth?: number, forResizing?: boolean): void;

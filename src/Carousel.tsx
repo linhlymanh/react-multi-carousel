@@ -104,10 +104,13 @@ class Carousel extends React.Component<CarouselProps, CarouselInternalState> {
   }
 
   static getDerivedStateFromProps(props: CarouselProps, state: CarouselInternalState) {
-    if (React.Children.count(props.children) !== state.totalItems) {
+    const newTotalItems = React.Children.count(props.children);
+    if (newTotalItems !== state.totalItems) {
       return {
-        totalItems: React.Children.count(props.children),
+        totalItems: React.Children.count(props.children)
       };
+    } else {
+      return null;
     }
   }
 
@@ -264,6 +267,10 @@ class Carousel extends React.Component<CarouselProps, CarouselInternalState> {
     if (this.props.infinite) {
       // this is to quickly cancel the animation and move the items position to create the infinite effects.
       this.correctClonesPosition({ domLoaded });
+    }
+
+    if (this.state.totalItems < this.state.currentSlide) {
+      this.goToSlide(Math.max(this.state.totalItems - this.state.slidesToShow, 0));
     }
   }
   public correctClonesPosition({
